@@ -55,21 +55,21 @@
     <p id="redirectMsg"></p>
 
     <script>
-      // WhatsApp group invite link 
+      // WhatsApp group invite link
       const whatsappLink = "https://chat.whatsapp.com/LfNRDRimE6sLPoWZ0HsUdA";
 
-      // Deployed Google Apps Script Web App URL (the API endpoint)
-      const apiEndpoint = "https://script.google.com/macros/s/AKfycbzd3L0UCoYj_IzARuhtvy7gdKgrOhl7Hyjnwz2b6kvZXdsEvKDIkp13yxOPkuYCCHwrpA/exec";
+      // Deployed Google Apps Script Web App URL
+      const apiEndpoint = "https://script.google.com/macros/s/AKfycbzIzDZmzcZxZuIX5dZk5lzXoGvRK8c6kvmxPc8OJCQjeB_1okSB7XL9kMrXQ49YZ4Xayg/exec"; // Replace with latest exec URL
 
       async function verifyCode() {
         const code = document.getElementById("code").value.trim();
+
         if (code.length !== 6) {
           document.getElementById("message").innerText = "Please enter a 6-digit code.";
           return;
         }
 
         try {
-          // Send POST request with JSON body to match your doPost()
           const response = await fetch(apiEndpoint, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -77,6 +77,7 @@
           });
 
           const result = await response.json();
+          console.log("Backend response:", result); // Debugging
 
           if (result.status === "verified") {
             document.getElementById("inputSection").style.display = "none";
@@ -88,11 +89,12 @@
             `;
             document.getElementById("message").innerText = "";
           } else {
-            document.getElementById("message").innerText = result.status;
+            document.getElementById("message").innerText = result.status || "Unknown error";
           }
         } catch (error) {
-          document.getElementById("message").innerText = "Error verifying code. Please try again later.";
-          console.error(error);
+          console.error("Fetch error:", error);
+          document.getElementById("message").innerText =
+            "Error verifying code. Please check your browser console or try again later.";
         }
       }
     </script>
