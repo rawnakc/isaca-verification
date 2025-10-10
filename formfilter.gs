@@ -1,7 +1,7 @@
 // Trigger this function on form submit (installable trigger)
 function onFormSubmit(e) {
-  // Use the spreadsheet ID instead of getActiveSpreadsheet
-  const ss = SpreadsheetApp.openById("1lbPR0gWUhSvNUNZArEUcQ8bnoGwJQcxyAtNRdfqTA-U"); //
+  
+  const ss = SpreadsheetApp.openById("1lbPR0gWUhSvNUNZArEUcQ8bnoGwJQcxyAtNRdfqTA-U"); 
   const sheet = ss.getSheetByName("Responses"); // Make sure this matches your tab name exactly
 
 
