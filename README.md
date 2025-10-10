@@ -17,7 +17,7 @@ This project utilizes:
 
 1. **User Submits Form**
    User fills out the Google Form with their name, school year, phone number, and email. Their phone number and email must be entered in the given format as shown. I implemented custom response validation to make sure that only US-format numbers can be entered as well as email addresses ending in Baruch College's domain.
-   _Image: ![](formquestions.png)
+    ![](formquestions.png)
 
 2. **Initial Sheet after User Submits Form**
    After the user submits the form, the backend logic from **formfilter.gs** will look through the submitted information.
@@ -25,22 +25,22 @@ This project utilizes:
    For the email, although we have response validation so it technically shouldn't be possible, if a user were to somehow bypass and utilize a email that doesn't use Baruch College's domain, it would be flagged with red shading and a note saying "Invalid email".
    As long as the user inputs a valid Baruch College email, they will receive the email to verify themselves and then be redirected to the WhatsApp link. A non-local area code number will be flagged, and a invalid email will not be sent the email to verify and will not receive the WhatsApp invite link.
    On the spreadsheet, the users verification status will change to "Pending" and their Token use will change to "FALSE" as they have not yet verified themselves.
-   Image: ![](initialsheet.png)
+    ![](initialsheet.png)
 
 3. **User Receives Email with Verification Code and Link to Verification Site**
    The **formfilter.gs** backend script sends an automatic email to those who had a valid form submission. This script also includes a function that generates a random 6 digit code. This code is sent along with this email as well as a link to a GitHub Page site where they can verify themselves with their given code.
-   Image: ![](imagesforREADME/email.png)
+    ![](email.png)
 
 4. **User Visits Verification Page**
    Once the user clicks on the link that was apart of the automated email, they will be directed to a GitHub Page. On this site, they will be asked to enter their 6 digit code that they received.
    The value the user enters into this input box is matched against what is in the spreadsheet because when the user submits the form, the code is generated and put into their row as well.
-   Image: ![](imagesforREADME/verificationpage.png)
+   ![](verificationpage.png)
 
 5. **User Verifies with their Code and is Redirected to WhatsApp invite link**
    Once the user enters their code, if its a valid code, a new tab will open to the WhatsApp invite link to join the community chat. Their is also a fallback on the Github Page itself for a hyperlink to the WhatsApp invite link in the case the tab unexpectedly doesn't open.
    If we also look back to the spreadsheet, their verification status will change to Verified and the Token status will change to "TRUE" signaling the user verified themselves with a real code emailed to them.
-   Image ![](whatsapptab.png)
-   Image ![](endsheet.png)
+    ![](whatsapptab.png)
+    ![](endsheet.png)
 
 ## Frontend Overview (GitHub Pages) 
 
