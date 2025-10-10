@@ -27,16 +27,16 @@ This project utilizes:
    On the spreadsheet, the users verification status will change to "Pending" and their Token use will change to "FALSE" as they have not yet verified themselves.
    Image: ![](initialsheet.png)
 
-4. **User Receives Email with Verification Code and Link to Verification Site**
+3. **User Receives Email with Verification Code and Link to Verification Site**
    The **formfilter.gs** backend script sends an automatic email to those who had a valid form submission. This script also includes a function that generates a random 6 digit code. This code is sent along with this email as well as a link to a GitHub Page site where they can verify themselves with their given code.
    Image: ![](imagesforREADME/email.png)
 
-5. **User Visits Verification Page**
+4. **User Visits Verification Page**
    Once the user clicks on the link that was apart of the automated email, they will be directed to a GitHub Page. On this site, they will be asked to enter their 6 digit code that they received.
    The value the user enters into this input box is matched against what is in the spreadsheet because when the user submits the form, the code is generated and put into their row as well.
    Image: ![](imagesforREADME/verificationpage.png)
 
-6. **User Verifies with their Code and is Redirected to WhatsApp invite link**
+5. **User Verifies with their Code and is Redirected to WhatsApp invite link**
    Once the user enters their code, if its a valid code, a new tab will open to the WhatsApp invite link to join the community chat. Their is also a fallback on the Github Page itself for a hyperlink to the WhatsApp invite link in the case the tab unexpectedly doesn't open.
    If we also look back to the spreadsheet, their verification status will change to Verified and the Token status will change to "TRUE" signaling the user verified themselves with a real code emailed to them.
    Image ![](whatsapptab.png)
