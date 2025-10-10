@@ -38,12 +38,7 @@
     </style>
   </head>
   <body>
-    <img
-      src="https://i.imgur.com/cCXGlAR.png"
-      alt="ISACA Club Logo"
-      class="logo"
-    />
-
+    <img src="https://i.imgur.com/cCXGlAR.png" alt="ISACA Club Logo" class="logo" />
     <h2>ISACA Cybersecurity Club Verification</h2>
     <p>Enter your 6-digit verification code to access the WhatsApp community link:</p>
 
@@ -55,34 +50,25 @@
     <p id="redirectMsg"></p>
 
     <script>
-      // WhatsApp group invite link
       const whatsappLink = "https://chat.whatsapp.com/LfNRDRimE6sLPoWZ0HsUdA";
-
-      // Deployed Google Apps Script Web App URL
-      const apiEndpoint = "https://script.google.com/macros/s/AKfycbzIzDZmzcZxZuIX5dZk5lzXoGvRK8c6kvmxPc8OJCQjeB_1okSB7XL9kMrXQ49YZ4Xayg/exec"; // Replace with latest exec URL
+      const apiEndpoint = "https://script.google.com/macros/s/AKfycbyh3ljZC0IxbzRXmWUwjBQDnhZxoy6DmOUasP75nIcQiAHPIVW7FoG5MkRHu74yfkmquQ/exec"; // latest exec URL
 
       async function verifyCode() {
         const code = document.getElementById("code").value.trim();
-
         if (code.length !== 6) {
           document.getElementById("message").innerText = "Please enter a 6-digit code.";
           return;
         }
 
         try {
-          const response = await fetch(apiEndpoint, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ code })
-          });
-
+          // GET request using query parameter
+          const response = await fetch(`${apiEndpoint}?code=${encodeURIComponent(code)}`);
           const result = await response.json();
-          console.log("Backend response:", result); // Debugging
+          console.log("Backend response:", result);
 
           if (result.status === "verified") {
             document.getElementById("inputSection").style.display = "none";
             window.open(whatsappLink, "_blank");
-
             document.getElementById("redirectMsg").innerHTML = `
               ✅ Verified! If the new tab didn't open, click
               <a href="${whatsappLink}" target="_blank">here</a> to join the WhatsApp group.
