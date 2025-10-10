@@ -64,16 +64,21 @@
       async function verifyCode() {
         const code = document.getElementById("code").value.trim();
         if (code.length !== 6) {
-          document.getElementById("message").innerText =
-            "Please enter a 6-digit code.";
+          document.getElementById("message").innerText = "Please enter a 6-digit code.";
           return;
         }
 
         try {
-          const response = await fetch(apiEndpoint + "?code=" + encodeURIComponent(code));
-          const resultText = await response.text();
+          // Send POST request with JSON body to match your doPost()
+          const response = await fetch(apiEndpoint, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ code })
+          });
 
-          if (resultText === "verified") {
+          const result = await response.json();
+
+          if (result.status === "verified") {
             document.getElementById("inputSection").style.display = "none";
             window.open(whatsappLink, "_blank");
 
@@ -83,15 +88,13 @@
             `;
             document.getElementById("message").innerText = "";
           } else {
-            document.getElementById("message").innerText = resultText;
+            document.getElementById("message").innerText = result.status;
           }
         } catch (error) {
-          document.getElementById("message").innerText =
-            "Error verifying code. Please try again later.";
+          document.getElementById("message").innerText = "Error verifying code. Please try again later.";
           console.error(error);
         }
       }
     </script>
   </body>
 </html>
-
