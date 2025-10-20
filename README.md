@@ -143,45 +143,44 @@ GitHub account for hosting the frontend
 Google Form connected to a Google Sheet
 
 Backend Setup (Google Apps Script):
-Open Google Apps Script
-Go to your Google Sheet
-Click Extensions → Apps Script
-Add Scripts
-Create formfilter.gs for form processing
-Create code.gs for verification API
+- Open Google Apps Script
+- Go to your Google Sheet
+- Click Extensions → Apps Script
+- Add Scripts
+- Create formfilter.gs for form processing
+- Create code.gs for verification API
 
 Configure Spreadsheet ID
-In code.gs, replace <YOUR_SPREADSHEET_ID> with your actual spreadsheet ID
-Find your spreadsheet ID in the URL: https://docs.google.com/spreadsheets/d/YOUR_ID_HERE/edit
-Deploy Web App
+- In code.gs, replace <YOUR_SPREADSHEET_ID> with your actual spreadsheet ID
+- Find your spreadsheet ID in the URL: https://docs.google.com/spreadsheets/d/YOUR_ID_HERE/edit
 
-Click Deploy → New deployment
-Type: Web app
-Execute as: Me
-Who has access: Anyone
-Click Deploy and copy the deployment URL
+Deploy Web App
+- Click Deploy → New deployment
+- Type: Web app
+- Execute as: Me
+- Who has access: Anyone
+- Click Deploy and copy the deployment URL
 
 Set Up Form Trigger
-Click Triggers (clock icon)
-Add trigger for formfilter.gs to run on form submission
+- Click Triggers (clock icon)
+- Add trigger for formfilter.gs to run on form submission
 
 Frontend Setup (GitHub Pages):
-Create Repository
-Create a new GitHub repository
-Add index.html to the repository
+- Create Repository
+- Create a new GitHub repository
+- Add index.html to the repository
 
 Update Script ID
-In index.html, replace <YOUR_SCRIPT_ID> with the ID from your deployment URL
-URL format: https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec
+- In index.html, replace <YOUR_SCRIPT_ID> with the ID from your deployment URL
+- URL format: https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec
 
 Enable GitHub Pages
-Go to repository Settings → Pages
-Set source to main branch
-Save and note your GitHub Pages URL
+- Go to repository Settings → Pages
+- Set source to main branch
+- Save and note your GitHub Pages URL
 
 Test the System
-Submit a test form
-Check email for verification code
-Visit GitHub Pages URL from email and enter code
-Verify WhatsApp link opens in new tab
-To solve this, I adjusted the Google App Scripts logic to use doGet(e) instead of doPost(e). With tis, the front end is able to properly pass the verificate code in a simple GET request to the backend. 
+- Submit a test form
+- Check email for verification code
+- Visit GitHub Pages URL from email and enter code
+- Verify WhatsApp link opens in new tab
