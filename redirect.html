@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Redirecting...</title>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const token = params.get('t');
+
+    if (!token) {
+      document.body.innerText = "❌ Invalid token.";
+    } else {
+      fetch(`https://script.google.com/macros/s/<YOUR_SCRIPT_ID>/redirect?t=${token}`)
+        .then(r => r.text())
+        .then(html => document.write(html))
+        .catch(e => document.body.innerText = "❌ Failed to redirect.");
+    }
+  </script>
+</head>
+<body>Redirecting...</body>
+</html>
