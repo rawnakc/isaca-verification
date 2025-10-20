@@ -27,60 +27,63 @@
         padding: 8px 16px;
         font-size: 16px;
       }
-      p {
-        margin-top: 15px;
+      #message {
+        color: red;
+        margin-top: 10px;
       }
-      #redirectMsg a {
-        color: #007bff;
-        text-decoration: none;
-        font-weight: bold;
+      #redirectMsg {
+        margin-top: 20px;
       }
     </style>
   </head>
   <body>
     <img src="https://i.imgur.com/cCXGlAR.png" alt="ISACA Club Logo" class="logo" />
     <h2>ISACA Cybersecurity Club Verification</h2>
-    <p>Enter your 6-digit verification code to access the WhatsApp community link:</p>
+    <p>Enter your 6-digit verification code:</p>
 
     <div id="inputSection">
       <input type="text" id="code" maxlength="6" placeholder="Enter code" />
       <button onclick="verifyCode()">Verify</button>
     </div>
-    <p id="message" style="color:red;"></p>
+
+    <p id="message"></p>
     <p id="redirectMsg"></p>
 
     <script>
-      const whatsappLink = "https://chat.whatsapp.com/LfNRDRimE6sLPoWZ0HsUdA";
-      const apiEndpoint = "https://script.google.com/macros/s/AKfycbyh3ljZC0IxbzRXmWUwjBQDnhZxoy6DmOUasP75nIcQiAHPIVW7FoG5MkRHu74yfkmquQ/exec"; // latest exec URL
+      const apiEndpoint = "https://script.google.com/macros/s/AKfycbxyZwpSqo5Gb8vnDq1pBUmzeDv341MZQ4oBqqVLbYpnBCmYvLHRMsj8u1a_wZyvzydgSw/exec";
+      const redirectEndpoint = "https://script.google.com/macros/s/AKfycbxyZwpSqo5Gb8vnDq1pBUmzeDv341MZQ4oBqqVLbYpnBCmYvLHRMsj8u1a_wZyvzydgSw/exec";
 
       async function verifyCode() {
         const code = document.getElementById("code").value.trim();
+        const msg = document.getElementById("message");
+        const redirectMsg = document.getElementById("redirectMsg");
+        msg.innerText = "";
+        redirectMsg.innerHTML = "";
+
         if (code.length !== 6) {
-          document.getElementById("message").innerText = "Please enter a 6-digit code.";
+          msg.innerText = "Please enter a 6-digit code.";
           return;
         }
 
         try {
-          // GET request using query parameter
           const response = await fetch(`${apiEndpoint}?code=${encodeURIComponent(code)}`);
           const result = await response.json();
-          console.log("Backend response:", result);
+          console.log(result);
 
-          if (result.status === "verified") {
+          if (result.status === "verified" && result.redirect) {
             document.getElementById("inputSection").style.display = "none";
-            window.open(whatsappLink, "_blank");
-            document.getElementById("redirectMsg").innerHTML = `
-              ✅ Verified! If the new tab didn't open, click
-              <a href="${whatsappLink}" target="_blank">here</a> to join the WhatsApp group.
-            `;
-            document.getElementById("message").innerText = "";
+            window.open(`${redirectEndpoint}?t=${result.redirect}`, "_blank");
+            redirectMsg.innerHTML = `✅ Verified! Opening WhatsApp...`;
+          } else if (result.status === "used") {
+            msg.innerText = "This code has already been used.";
+          } else if (result.status === "invalid") {
+            msg.innerText = "Invalid code. Please check your email.";
           } else {
-            document.getElementById("message").innerText = result.status || "Unknown error";
+            msg.innerText = "Unexpected response. Try again later.";
           }
         } catch (error) {
-          console.error("Fetch error:", error);
-          document.getElementById("message").innerText =
-            "Error verifying code. Please check your browser console or try again later.";
+          msg.innerText = "Error verifying code. Please try again.";
+          console.error(error);
         }
       }
     </script>
