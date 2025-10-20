@@ -50,10 +50,10 @@
     <p id="redirectMsg"></p>
 
     <script>
-      const apiEndpoint = "https://script.google.com/macros/s/AKfycbxjziZ00Ig5Z8HY1pUCf2BQtgJAzi7MoqJclSVKbKwQyQvOjpp6tMi-VwWmtptzk6KqTw/exec";
-      const redirectEndpoint = "https://script.google.com/macros/s/AKfycbxjziZ00Ig5Z8HY1pUCf2BQtgJAzi7MoqJclSVKbKwQyQvOjpp6tMi-VwWmtptzk6KqTw/redirect";
+      const apiEndpoint = "https://script.google.com/macros/s/AKfycbzNOiZf6KUZdfjFOkoSLuNzCbYqJ9QQPMsytY6VJFnjBopismMtWqYPgRkjwJp0p8asCw/exec";
+      const redirectEndpoint = "https://script.google.com/macros/s/AKfycbzNOiZf6KUZdfjFOkoSLuNzCbYqJ9QQPMsytY6VJFnjBopismMtWqYPgRkjwJp0p8asCw/redirect";
 
-      async function verifyCode() {
+      function verifyCode() {
         const code = document.getElementById("code").value.trim();
         const msg = document.getElementById("message");
         const redirectMsg = document.getElementById("redirectMsg");
@@ -65,10 +65,13 @@
           return;
         }
 
-        try {
-          const response = await fetch(`${apiEndpoint}?code=${encodeURIComponent(code)}`);
-          const result = await response.json();
-          console.log(result);
+        const script = document.createElement("script");
+        script.src = ${apiEndpoint}?code=${encodeURIComponent(code))&callback=handleResponse';
+          document.body.appendChild(script);
+                                          }
+        function handleResponse(result) {
+          const msg = document.getElementById("message");
+          const redirectMsg = document.getElementById("redirectMsg");
 
           if (result.status === "verified" && result.redirect) {
             document.getElementById("inputSection").style.display = "none";
