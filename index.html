@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>ISACA Club Email Verification</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      background-color: #e5f3fd;
+      text-align: center;
+    }
+    img.logo {
+      max-width: 200px;
+      margin-bottom: 20px;
+    }
+    h2 {
+      margin-bottom: 20px;
+    }
+    input {
+      padding: 8px;
+      font-size: 16px;
+      margin-right: 10px;
+      width: 120px;
+    }
+    button {
+      padding: 8px 16px;
+      font-size: 16px;
+    }
+    #message {
+      color: red;
+      margin-top: 10px;
+    }
+    #redirectMsg {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <img src="https://i.imgur.com/cCXGlAR.png" alt="ISACA Club Logo" class="logo" />
+  <h2>ISACA Cybersecurity Club Verification</h2>
+  <p>Enter your 6-digit verification code:</p>
+
+  <div id="inputSection">
+    <input type="text" id="code" maxlength="6" placeholder="Enter code" />
+    <button onclick="verifyCode()">Verify</button>
+  </div>
+
+  <p id="message"></p>
+  <p id="redirectMsg"></p>
+
+  <script>
+    const apiEndpoint = "https://https://script.google.com/macros/s/AKfycbw-X9Ap8a-HqXeS-JZ8kB8WXtb5maebPgfL7_IM5VNumP2Um_Kim3xnRTyfg53UBCBTkA/exec";
+    const redirectPage = "https://rawnakc.github.io/isaca-verification/redirect.html";
+
+    function verifyCode() {
+      const code = document.getElementById("code").value.trim();
+      const msg = document.getElementById("message");
+      const redirectMsg = document.getElementById("redirectMsg");
+      msg.innerText = "";
+      redirectMsg.innerHTML = "";
+
+      if (code.length !== 6) {
+        msg.innerText = "Please enter a 6-digit code.";
+        return;
+      }
+
+      const oldScript = document.getElementById("jsonpScript");
+      if (oldScript) oldScript.remove();
+
+      const script = document.createElement("script");
+      script.id = "jsonpScript";
+      script.src = `${apiEndpoint}?code=${encodeURIComponent(code)}&callback=handleResponse`;
+      document.body.appendChild(script);
+    }
+
+    function handleResponse(result) {
+      const msg = document.getElementById("message");
+      const redirectMsg = document.getElementById("redirectMsg");
+
+      if (result.status === "verified" && result.redirect) {
+        document.getElementById("inputSection").style.display = "none";
+        window.open(`${redirectPage}?t=${result.redirect}`, "_blank");
+        redirectMsg.innerHTML = "✅ Verified! Opening WhatsApp...";
+      } else if (result.status === "used") {
+        msg.innerText = "This code has already been used.";
+      } else if (result.status === "invalid") {
+        msg.innerText = "Invalid code. Please check your email.";
+      } else if (result.status === "error") {
+        msg.innerText = "Error: " + result.message;
+      } else {
+        msg.innerText = "Unexpected response. Try again later.";
+      }
+    }
+  </script>
+</body>
+</html>
