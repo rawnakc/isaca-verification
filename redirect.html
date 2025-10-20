@@ -10,7 +10,7 @@
     if (!token) {
       document.body.innerText = "❌ Invalid token.";
     } else {
-      fetch(`https://script.google.com/macros/s/<YOUR_SCRIPT_ID>/redirect?t=${token}`)
+      fetch(`https://script.google.com/macros/s/AKfycbw-X9Ap8a-HqXeS-JZ8kB8WXtb5maebPgfL7_IM5VNumP2Um_Kim3xnRTyfg53UBCBTkA/redirect?t=${token}`)
         .then(r => r.text())
         .then(html => document.write(html))
         .catch(e => document.body.innerText = "❌ Failed to redirect.");
