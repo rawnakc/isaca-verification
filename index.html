@@ -65,10 +65,15 @@
           return;
         }
 
+        const oldScript = document.getElementById("jsonpScript");
+        if (oldScript) oldScript.remove();
+
         const script = document.createElement("script");
-        script.src = ${apiEndpoint}?code=${encodeURIComponent(code))&callback=handleResponse';
-          document.body.appendChild(script);
-                                          }
+        script.id = "jsonpScript";
+        script.src = '${apiEndpoint}?code=${encodeURIComponent(code)}&callback=handleResponse';
+        document.body.appendChild(script);
+      }
+                                
         function handleResponse(result) {
           const msg = document.getElementById("message");
           const redirectMsg = document.getElementById("redirectMsg");
