@@ -1,6 +1,6 @@
 // Check if the code is valid
 function checkCode(code) {
-  const ss = SpreadsheetApp.openById("1lbPR0gWUhSvNUNZArEUcQ8bnoGwJQcxyAtNRdfqTA-U");
+  const ss = SpreadsheetApp.openById("<>"); // Enter your spreadsheet ID here
   const sheet = ss.getSheetByName("Responses");
   const data = sheet.getDataRange().getValues();
   const inputCode = code.toString().trim();
