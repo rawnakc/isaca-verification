@@ -60,7 +60,7 @@ function sendVerificationEmail(firstName, email, row, sheet){
   sheet.getRange(row, 10).setValue("FALSE");         // Column J: Token Used
 
   // Verification page URL
-  const verificationLink = "https://rawnakc.github.io/isaca-verification/";
+  const verificationLink = "<>";
 
   const subject = "ISACA Cybersecurity Club: Verify Your Email";
   const body = `Hi ${firstName},
@@ -75,7 +75,7 @@ Verify here: ${verificationLink}
 
 This code is unique to your submission and should not be shared with anyone else.
 
-If you did not submit this form, please ignore this email. If you have any questions, you may contact isgbaruchwhatsapp@gmail.com.
+If you did not submit this form, please ignore this email. If you have any questions, you may contact <>.
 
 Thank you!
 - ISACA Cybersecurity Club`;
